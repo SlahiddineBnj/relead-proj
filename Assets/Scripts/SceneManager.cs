@@ -1,31 +1,30 @@
 using System.Collections.Generic;
 using AutoLayout3D;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SceneManager : MonoBehaviour
 {
     // the speed at which the balls should be moving => defaulted to 17
-    public float speed = 17f;
+    public float speed ;
     // the interval of time between direction updates in the game => defaulted to 2.4 seconds between each update
-    public float interval = 2.4f;
+    public float interval ;
     // the parent of the balls objects in the scene
     [SerializeField] private Transform ballsContainer;
     // a reference for the ball prefab 
     [SerializeField] private Ball ballPrefab;  
-    // the number of balls selected by the admin to be instantiated => defaulted to 4
-    public int ballsNumber = 4; 
     // should contain all the instantiated ball objects
     private List<Ball> _ballsList = new List<Ball>();
     // should contain the correct ball instances selected by the admin
-    public List<int> correctBallsIndexes;
+    public List<int> correctBallsIndexes = new List<int>();
     // should contain the player selected balls to be verified
-    public List<int> playerSelectedBallsIndexes;
+    public List<int> playerSelectedBallsIndexes = new List<int>();
     // gives us a feedback whether the game state is 
-    //todo - add odin here por favore
     public GameState state;
-    // contains the success rate result of the scene 
-    private float rate;
-    [SerializeField] private PanelHandler _panelHandler; 
+    // we should grab the number of balls to be generated value for the reset 
+    [SerializeField] private Slider numberSlider; 
+    [SerializeField] private PanelHandler _panelHandler;
+    public LayoutGroup3D _layoutGroup3D; 
     
     
     
@@ -36,25 +35,25 @@ public class SceneManager : MonoBehaviour
 
     private void LoadScene()
     {
-        _generateBalls();
+        //_generateBalls();
         state = GameState.NotStarted; 
     }
     
     
-    // generate the balls with shuffeled indexes to confuse the player who try to memorize the places 
-    public void _generateBalls()
+    // generate the balls with shuffled indexes to confuse the player who try to memorize the places 
+    public void _generateBalls(int nb)
     {
+        RemoveChildrenIfExists();
         var indexesList = new List<int>();
-        for (var counter = 0; counter < ballsNumber; counter++)
+        for (var counter = 0; counter < nb; counter++)
         {
             indexesList.Add(counter+1);
         }
         Shuffle(indexesList);
-        RemoveChildrenIfExists();
         _ballsList.Clear();
-        for (var i = 0; i < ballsNumber; i++)
+        for (var i = 0; i < nb; i++)
         {
-            Ball ball = Instantiate(ballPrefab, ballsContainer); 
+            var ball = Instantiate(ballPrefab, ballsContainer); 
             ball.Initialize(indexesList[i],speed,interval);
             _ballsList.Add(ball);
         }
@@ -77,7 +76,7 @@ public class SceneManager : MonoBehaviour
         var children = ballsContainer.childCount;
         for (var i = children - 1; i >= 0; i--)
         {
-            Destroy(ballsContainer.GetChild(i).gameObject);
+            DestroyImmediate(ballsContainer.GetChild(i).gameObject);;
         }
     }
 
@@ -85,7 +84,7 @@ public class SceneManager : MonoBehaviour
     // set all balls in motion
     public void Run()
     {
-        ballsContainer.GetComponent<GridLayoutGroup3D>().enabled = false; 
+        ballsContainer.GetComponent<GridLayoutGroup3D>().enabled = false;
         for (var i = 0; i < _ballsList.Count; i++)
         {
             _ballsList[i].UnSelect();
@@ -113,9 +112,21 @@ public class SceneManager : MonoBehaviour
         {
             if (playerSelectedBallsIndexes.Contains(correctBallsIndexes[i])) correctAnswers++; 
         }
-        rate = (float)correctAnswers/ (float)correctBallsIndexes.Count;
+        var rate = ( (float)correctAnswers/ (float)correctBallsIndexes.Count ) * 100;
+        _panelHandler.AssignRateValue(rate);
     }
 
+
+    public void Reset()
+    {
+        correctBallsIndexes.Clear();
+        playerSelectedBallsIndexes.Clear();
+        state = GameState.NotStarted;
+        _generateBalls((int)numberSlider.value);
+        _layoutGroup3D.UpdateLayout();
+        _panelHandler.ShowAdminPanel();
+        
+    }
     
     
 }

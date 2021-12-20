@@ -12,7 +12,7 @@ public class BallDetection : MonoBehaviour
         if (!Physics.Raycast(ray, out hit, 100f)) return;
         if (!hit.transform.CompareTag("Ball")) return;
         Ball ball = hit.transform.GetComponent<Ball>();
-        int ballId = ball.id; 
+        var ballId = ball.id; 
         if (_sceneManager.state == GameState.Running) return;
         switch (_sceneManager.state)
         {
@@ -21,16 +21,26 @@ public class BallDetection : MonoBehaviour
                 if (!_sceneManager.correctBallsIndexes.Contains(ballId)) _sceneManager.correctBallsIndexes.Add(ballId);
                 else
                     _sceneManager.correctBallsIndexes.Remove(ballId); 
+                ball.HandleClick();
                 break; 
             case GameState.Stopped :
                 // player selection would be registered or removed 
-                if (!_sceneManager.playerSelectedBallsIndexes.Contains(ballId)) _sceneManager.playerSelectedBallsIndexes.Add(ballId);
-                else
-                    _sceneManager.playerSelectedBallsIndexes.Remove(ballId); 
+                if (!_sceneManager.playerSelectedBallsIndexes.Contains(ballId)
+                    &&
+                    _sceneManager.playerSelectedBallsIndexes.Count < _sceneManager.correctBallsIndexes.Count)
+                {
+                    _sceneManager.playerSelectedBallsIndexes.Add(ballId);
+                    ball.HandleClick();
+                }
+                else if (_sceneManager.playerSelectedBallsIndexes.Contains(ballId))
+                {
+                    _sceneManager.playerSelectedBallsIndexes.Remove(ballId);
+                    ball.HandleClick();
+                }
+                    
+                
                 break; 
         }
-        // handle the state of the button
-        ball.HandleClick();
-
+        
     }
 }

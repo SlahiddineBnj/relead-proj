@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,17 +10,29 @@ public class PanelHandler : MonoBehaviour
     [SerializeField] private Transform gameStopPanel; 
     [SerializeField] private Transform validatePanel; 
     [SerializeField] private Transform resultPanel;
-    [SerializeField] private SceneManager _sceneManager; 
+    [SerializeField] private SceneManager _sceneManager;
+    private ResultPanel resultPanelScript;
+
+    private void Awake()
+    {
+        resultPanelScript = resultPanel.GetComponent<ResultPanel>(); 
+    }
 
 
-    //todo - animate all of these
+    public void ShowAdminPanel()
+    {
+        CloseResultPanel();
+        CloseValidatePanel();
+        ShowSelectPanel();
+        adminPanel.gameObject.SetActive(true);
+    }
     public void CloseAdminPanel()
     {
         
         adminPanel.gameObject.SetActive(false);
     }
 
-    public void ShowSelectPanel()
+    private void ShowSelectPanel()
     {
         selectPanel.gameObject.SetActive(true);
     }
@@ -32,6 +45,7 @@ public class PanelHandler : MonoBehaviour
 
     public void ShowGameStopPanel()
     {
+        if (_sceneManager.correctBallsIndexes.Count == 0) return;
         CloseSelectPanel();
         gameStopPanel.gameObject.SetActive(true);
     }
@@ -55,12 +69,17 @@ public class PanelHandler : MonoBehaviour
 
     public void ShowResultPanel()
     {
-        CloseValidatePanel();
+        _sceneManager.Check();
         resultPanel.gameObject.SetActive(true);
     }
 
-    public void CloseResultPanel()
+    private void CloseResultPanel()
     {
         resultPanel.gameObject.SetActive(false);
+    }
+
+    public void AssignRateValue(float value)
+    {
+        resultPanelScript.rateText.text = value.ToString("F1")+"  %"; 
     }
 }

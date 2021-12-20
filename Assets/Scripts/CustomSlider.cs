@@ -19,6 +19,12 @@ public class CustomSlider : MonoBehaviour
     {
         if(!isFloat) text.text = ((int)initialValue).ToString();
         else text.text = ((float)initialValue).ToString();
+        if (type == SliderType.BallsNumber)
+        {
+            sceneManager._generateBalls((int)initialValue);
+            sceneManager._layoutGroup3D.UpdateLayout();
+        }
+        
     }
 
     public void UpdateComponent()
@@ -30,8 +36,9 @@ public class CustomSlider : MonoBehaviour
         switch (type)
         {
             case SliderType.BallsNumber:
-                sceneManager.ballsNumber = (int)slider.value; 
-                sceneManager._generateBalls();
+                //sceneManager.ballsNumber = (int)slider.value; 
+                sceneManager._generateBalls((int)slider.value);
+                sceneManager._layoutGroup3D.UpdateLayout();
                 break;
             case SliderType.Speed:
                 sceneManager.speed = slider.value;

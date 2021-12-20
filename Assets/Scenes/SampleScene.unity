@@ -943,7 +943,7 @@ MonoBehaviour:
   text: {fileID: 381913489}
   sceneManager: {fileID: 2085299742}
   slider: {fileID: 232398839}
-  initialValue: 1
+  initialValue: 8
   isFloat: 0
 --- !u!114 &232398839
 MonoBehaviour:
@@ -992,7 +992,7 @@ MonoBehaviour:
   m_MinValue: 1
   m_MaxValue: 20
   m_WholeNumbers: 1
-  m_Value: 1
+  m_Value: 8
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -1728,7 +1728,7 @@ GameObject:
   - component: {fileID: 560763070}
   - component: {fileID: 560763069}
   - component: {fileID: 560763072}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: face-1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2295,7 +2295,7 @@ MonoBehaviour:
   m_MinValue: 2
   m_MaxValue: 8
   m_WholeNumbers: 1
-  m_Value: 2
+  m_Value: 4
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -2327,7 +2327,7 @@ MonoBehaviour:
   text: {fileID: 787043467}
   sceneManager: {fileID: 2085299742}
   slider: {fileID: 760293182}
-  initialValue: 2
+  initialValue: 4
   isFloat: 0
 --- !u!1 &787043465
 GameObject:
@@ -2558,6 +2558,7 @@ GameObject:
   - component: {fileID: 939474429}
   - component: {fileID: 939474428}
   - component: {fileID: 939474427}
+  - component: {fileID: 939474430}
   m_Layer: 5
   m_Name: ResultPanel
   m_TagString: Untagged
@@ -2580,7 +2581,7 @@ RectTransform:
   - {fileID: 43826879}
   - {fileID: 2053292188}
   m_Father: {fileID: 1502230737}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -2651,6 +2652,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 939474425}
   m_CullTransparentMesh: 1
+--- !u!114 &939474430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 939474425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1012a6f944a4fbd4e9eb946215954d6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rateText: {fileID: 43826880}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -3976,7 +3990,7 @@ GameObject:
   - component: {fileID: 1281075634}
   - component: {fileID: 1281075633}
   - component: {fileID: 1281075636}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: face-6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4230,7 +4244,7 @@ GameObject:
   - component: {fileID: 1370916885}
   - component: {fileID: 1370916884}
   - component: {fileID: 1370916887}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: face-5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4400,7 +4414,7 @@ RectTransform:
   - {fileID: 1257325140}
   - {fileID: 989325503}
   m_Father: {fileID: 1502230737}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -4674,8 +4688,8 @@ RectTransform:
   - {fileID: 583502517}
   - {fileID: 418635646}
   - {fileID: 1572396695}
-  - {fileID: 939474426}
   - {fileID: 1452371301}
+  - {fileID: 939474426}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4779,7 +4793,7 @@ GameObject:
   - component: {fileID: 1541725689}
   - component: {fileID: 1541725688}
   - component: {fileID: 1541725691}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: face-2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5917,7 +5931,7 @@ GameObject:
   - component: {fileID: 1946321988}
   - component: {fileID: 1946321987}
   - component: {fileID: 1946321990}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: face-3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6393,7 +6407,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2085299742}
         m_TargetAssemblyTypeName: SceneManager, Assembly-CSharp
-        m_MethodName: Run
+        m_MethodName: Reset
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6559,15 +6573,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac57101170ee1564e9d1ff4220d0f97d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 14
-  interval: 2.4
+  speed: 8
+  interval: 1.7
   ballsContainer: {fileID: 433561739}
   ballPrefab: {fileID: 2355289604664364344, guid: 40b707ddb74dab54f8ac3f5290db8045, type: 3}
-  ballsNumber: 4
   correctBallsIndexes: 
   playerSelectedBallsIndexes: 
   state: 0
+  numberSlider: {fileID: 760293182}
   _panelHandler: {fileID: 1502230738}
+  _layoutGroup3D: {fileID: 433561738}
 --- !u!1 &2111192134
 GameObject:
   m_ObjectHideFlags: 0
