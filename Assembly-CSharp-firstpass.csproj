@@ -52,13 +52,13 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Plugins\AutoLayout3D\Scripts\LayoutElement3D.cs" />
-     <Compile Include="Assets\Plugins\AutoLayout3D\Scripts\LayoutGroup3D.cs" />
-     <Compile Include="Assets\Plugins\AutoLayout3D\Scripts\GridLayoutGroup3D.cs" />
      <Compile Include="Assets\Plugins\AutoLayout3D\Scripts\AutoLayout3DEditor.cs" />
-     <Compile Include="Assets\Plugins\AutoLayout3D\Scripts\XAxisLayoutGroup3D.cs" />
-     <Compile Include="Assets\Plugins\AutoLayout3D\Scripts\ZAxisLayoutGroup3D.cs" />
      <Compile Include="Assets\Plugins\AutoLayout3D\Scripts\YAxisLayoutGroup3D.cs" />
+     <Compile Include="Assets\Plugins\AutoLayout3D\Scripts\LayoutGroup3D.cs" />
+     <Compile Include="Assets\Plugins\AutoLayout3D\Scripts\XAxisLayoutGroup3D.cs" />
+     <Compile Include="Assets\Plugins\AutoLayout3D\Scripts\GridLayoutGroup3D.cs" />
+     <Compile Include="Assets\Plugins\AutoLayout3D\Scripts\ZAxisLayoutGroup3D.cs" />
+     <Compile Include="Assets\Plugins\AutoLayout3D\Scripts\LayoutElement3D.cs" />
      <None Include="Assets\Plugins\AutoLayout3D\readme.txt" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
