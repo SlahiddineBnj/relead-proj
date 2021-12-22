@@ -1,85 +1,58 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PanelHandler : MonoBehaviour
 {
-    [SerializeField] private Transform adminPanel;
-    [SerializeField] private Transform selectPanel;
-    [SerializeField] private Transform gameStopPanel; 
-    [SerializeField] private Transform validatePanel; 
-    [SerializeField] private Transform resultPanel;
+    [SerializeField] private AdminPanel adminPanel;
+    [SerializeField] private SelectPanel selectPanel;
+    [SerializeField] private GameStopPanel gameStopPanel; 
+    [SerializeField] private ValidatePanel validatePanel; 
+    [SerializeField] private ResultPanel resultPanel;
     [SerializeField] private SceneManager _sceneManager;
-    private ResultPanel resultPanelScript;
 
-    private void Awake()
+    
+    public void Select()
     {
-        resultPanelScript = resultPanel.GetComponent<ResultPanel>(); 
+        selectPanel.Show();
+        adminPanel.Hide();
     }
 
-
-    public void ShowAdminPanel()
+    public void Play()
     {
-        CloseResultPanel();
-        CloseValidatePanel();
-        ShowSelectPanel();
-        adminPanel.gameObject.SetActive(true);
-    }
-    public void CloseAdminPanel()
-    {
-        
-        adminPanel.gameObject.SetActive(false);
-    }
-
-    private void ShowSelectPanel()
-    {
-        selectPanel.gameObject.SetActive(true);
+        if (_sceneManager.correctBallsIndexes.Count == 0)
+        {
+            // trigger an exception or show a popup to signal the admin to select balls 
+            Debug.Log("Please Select some balls !");
+        }
+        else
+        {
+            selectPanel.Hide();
+            _sceneManager.Run();
+            gameStopPanel.Show();
+        }
     }
 
-    private void CloseSelectPanel()
+    public void Stop()
     {
-        selectPanel.gameObject.SetActive(false);
-        _sceneManager.Run();
-    }
-
-    public void ShowGameStopPanel()
-    {
-        if (_sceneManager.correctBallsIndexes.Count == 0) return;
-        CloseSelectPanel();
-        gameStopPanel.gameObject.SetActive(true);
-    }
-
-    private void CloseGameStopPanel()
-    {
-        gameStopPanel.gameObject.SetActive(false);
         _sceneManager.Stop();
+        gameStopPanel.Hide();
+        validatePanel.Show();
     }
 
-    public void ShowValidatePanel()
+    public void Validate()
     {
-        CloseGameStopPanel();
-        validatePanel.gameObject.SetActive(true);
+        var rate = _sceneManager.Check();
+        resultPanel.AssignValue(rate);
+        resultPanel.Show();
     }
 
-    private void CloseValidatePanel()
+    public void Replay()
     {
-        validatePanel.gameObject.SetActive(false);
+        _sceneManager.Reset();
+        resultPanel.Hide();
+        validatePanel.Hide();
+        adminPanel.Show();
     }
-
-    public void ShowResultPanel()
-    {
-        _sceneManager.Check();
-        resultPanel.gameObject.SetActive(true);
-    }
-
-    private void CloseResultPanel()
-    {
-        resultPanel.gameObject.SetActive(false);
-    }
-
-    public void AssignRateValue(float value)
-    {
-        resultPanelScript.rateText.text = value.ToString("F1")+"  %"; 
-    }
+    
+    
+    
 }

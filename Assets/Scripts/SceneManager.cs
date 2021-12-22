@@ -105,7 +105,7 @@ public class SceneManager : MonoBehaviour
     }
 
 
-    public void Check()
+    public float Check()
     {
         var correctAnswers = 0;
         for (var i = 0; i < correctBallsIndexes.Count; i++)
@@ -113,7 +113,7 @@ public class SceneManager : MonoBehaviour
             if (playerSelectedBallsIndexes.Contains(correctBallsIndexes[i])) correctAnswers++; 
         }
         var rate = ( (float)correctAnswers/ (float)correctBallsIndexes.Count ) * 100;
-        _panelHandler.AssignRateValue(rate);
+        return rate; 
     }
 
 
@@ -124,8 +124,7 @@ public class SceneManager : MonoBehaviour
         state = GameState.NotStarted;
         _generateBalls((int)numberSlider.value);
         _layoutGroup3D.UpdateLayout();
-        _panelHandler.ShowAdminPanel();
-        
+
     }
     
     
